@@ -31,8 +31,49 @@ a {
     @apply bg-white/15 text-white;
 }
 
+#sidebar .brand .brand-logo {
+    @apply h-7 w-auto max-w-[150px] object-contain;
+}
+
 #sidebar .sidebar-footer {
     @apply mt-auto break-all p-4 text-xs text-gray-500;
+}
+
+#sidebar .sidebar-user {
+    @apply mb-2 truncate text-gray-400;
+}
+
+#sidebar .sidebar-logout {
+    @apply inline-flex items-center gap-2 rounded-lg px-2 py-1 text-gray-300 transition hover:bg-white/10 hover:text-white;
+}
+
+/* Login page */
+.login-body {
+    @apply flex min-h-screen items-center justify-center bg-gray-100 p-4;
+}
+
+.login-card {
+    @apply w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-8 shadow-sm;
+}
+
+.login-brand {
+    @apply mb-6 flex flex-col items-center gap-3;
+}
+
+.login-brand .login-logo {
+    @apply h-12 w-auto max-w-[200px] object-contain;
+}
+
+.login-brand .login-title {
+    @apply text-xl font-semibold text-gray-900;
+}
+
+.login-error {
+    @apply mb-4 rounded-lg bg-red-50 px-3 py-2 text-center text-sm text-red-700;
+}
+
+.google-btn {
+    @apply flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50;
 }
 
 /* Main + topbar */

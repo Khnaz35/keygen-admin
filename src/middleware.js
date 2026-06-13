@@ -1,30 +1,28 @@
+const PUBLIC_PATHS = ["/login", "/auth/google", "/auth/google/callback", "/app.css"];
 
-export function authorize(req, res, next) {
-    const reject = () => {
-        res.setHeader("www-authenticate", "Basic");
-        res.sendStatus(401);
-    };
+function isPublic(path) {
+    if (path === "/webhooks/paddle") {
+        return true;
+    }
 
-    if (req.path === "/webhooks/paddle") {
+    return PUBLIC_PATHS.some((p) => path === p || path.startsWith(p + "/"));
+}
+
+export function locals(req, res, next) {
+    res.locals.brandName = process.env.BRAND_NAME || "License Admin";
+    res.locals.brandLogo = process.env.BRAND_LOGO_URL || "";
+    res.locals.sessionEmail = (req.session && req.session.email) || "";
+    next();
+}
+
+export function requireAuth(req, res, next) {
+    if (isPublic(req.path)) {
         return next();
     }
 
-    const authorization = req.headers.authorization;
-
-    if (!authorization) {
-        return reject();
+    if (req.session && req.session.authenticated) {
+        return next();
     }
 
-    const [username, password] = Buffer.from(
-        authorization.replace("Basic ", ""),
-        "base64"
-    )
-        .toString()
-        .split(":");
-
-    if (!(username === process.env.SITE_USER && password === process.env.SITE_PASSWORD)) {
-        return reject();
-    }
-
-    next();
+    return res.redirect("/login");
 }

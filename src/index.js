@@ -6,7 +6,13 @@ import * as controllers from "./controllers/index.js";
 import * as middleware from "./middleware.js";
 
 const hummingbird = new Hummingbird();
-hummingbird.app.use(middleware.authorize);
+hummingbird.app.use(middleware.locals);
+hummingbird.app.use(middleware.requireAuth);
+
+hummingbird.get("/login", controllers.auth.login);
+hummingbird.get("/auth/google", controllers.auth.start);
+hummingbird.get("/auth/google/callback", controllers.auth.callback);
+hummingbird.get("/logout", controllers.auth.logout);
 
 hummingbird.get("/", controllers.products.home);
 hummingbird.get("/licenses", controllers.licenses.index);
