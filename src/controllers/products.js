@@ -1,5 +1,6 @@
 import keygen from "../keygen.js";
 import getAPIKey from "../api_key.js";
+import { getLicenseMachines, daysUntil, merchantOf } from "../machines.js";
 
 export async function index(req, res) {
     const api_key = await getAPIKey();
@@ -24,5 +25,12 @@ export async function show(req, res) {
     const product = await keygen.getProduct(api_key, product_id);
     const policies = await keygen.getPolicies(api_key, product_id);
     const licenses = await keygen.getLicenses(api_key, product_id);
+
+    for (const license of licenses) {
+        const machines = await getLicenseMachines(api_key, license.id);
+        license.merchant = merchantOf(machines);
+        license.days = daysUntil(license.attributes.expiry);
+    }
+
     res.render('product', { product, policies, licenses });
 }

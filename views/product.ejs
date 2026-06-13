@@ -96,30 +96,33 @@
         <table>
             <thead>
                 <tr>
+                    <th>Store</th>
                     <th>Email</th>
+                    <th>Domain</th>
                     <th>Key</th>
-                    <th>ID</th>
                     <th>Status</th>
-                    <th>Validated</th>
+                    <th>Expires</th>
                     <th>Created</th>
                 </tr>
             </thead>
 
             <% for (const license of licenses) { %>
+            <% const meta = license.attributes.metadata || {}; %>
             <tr>
                 <td>
                     <a href="/license/<%= license.id %>">
-                        <%= license.attributes.metadata.email %>
+                        <%= license.merchant.store || meta.store || "—" %>
                     </a>
                 </td>
+                <td><%= meta.email || license.merchant.email || "—" %></td>
+                <td class="mono"><%= license.merchant.domain || "—" %></td>
                 <td class="mono"><%= license.attributes.key.split("-")[0] %></td>
-                <td class="mono"><%= license.id.split("-")[0] %></td>
                 <td><%= license.attributes.status %></td>
                 <td>
-                    <% if (license.attributes.lastValidated === null) { %>
-                    never
+                    <% if (license.attributes.expiry) { %>
+                    <%= license.attributes.expiry.split("T")[0] %><% if (license.days !== null) { %> <span class="<%= license.days < 0 ? 'text-red-600' : 'text-gray-500' %>">(<%= license.days %>d)</span><% } %>
                     <% } else { %>
-                    <%= license.attributes.lastValidated.split("T")[0] %>
+                    perpetual
                     <% } %>
                 </td>
                 <td>
@@ -129,7 +132,7 @@
             <% } %>
             <% if (licenses.length === 0) { %>
             <tr>
-                <td colspan="6">No licenses found</td>
+                <td colspan="7">No licenses found</td>
             </tr>
             <% } %>
         </table>

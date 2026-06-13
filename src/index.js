@@ -19,6 +19,7 @@ hummingbird.get("/product/:product_id/licenses/create", controllers.licenses.cre
 hummingbird.post("/product/:product_id/licenses/create", controllers.licenses.handle_create);
 hummingbird.get("/license/:license_id", controllers.licenses.show);
 hummingbird.get("/license/:license_id/delete", controllers.licenses.handle_delete);
+hummingbird.get("/machine/:machine_id/delete", controllers.machines.handle_delete);
 
 hummingbird.app.post("/webhooks/paddle", controllers.paddle.handle_webhook);
 

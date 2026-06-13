@@ -1,11 +1,14 @@
 import keygen from "../keygen.js";
 import getAPIKey from "../api_key.js";
+import { getLicenseMachines, daysUntil } from "../machines.js";
 
 export async function show(req, res) {
     const { license_id } = req.params;
     const api_key = await getAPIKey();
     const license = await keygen.getLicense(api_key, license_id);
-    res.render('license', { license });
+    const machines = await getLicenseMachines(api_key, license_id);
+    const days = daysUntil(license.attributes.expiry);
+    res.render('license', { license, machines, days });
 }
 
 export async function create(req, res) {

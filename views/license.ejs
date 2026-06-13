@@ -55,11 +55,46 @@
                 <td class="full mono"><%= license.attributes.lastValidated || "never" %></td>
             </tr>
             <tr>
+                <td>EXPIRES</td>
+                <td class="full mono">
+                    <% if (license.attributes.expiry) { %>
+                    <%= license.attributes.expiry.split("T")[0] %><% if (typeof days !== "undefined" && days !== null) { %> (<%= days %> days<%= days < 0 ? " ago" : " left" %>)<% } %>
+                    <% } else { %>
+                    perpetual
+                    <% } %>
+                </td>
+            </tr>
+            <tr>
                 <td>CREATED</td>
                 <td class="full mono"><%= license.attributes.created %></td>
             </tr>
         </table>
     </div>
+
+    <h2 class="text-2xl my-4 px-8">Activations / Store</h2>
+    <div class="flex flex-col gap-4 bg-gray-50 border-t py-1 border-t-gray-200 pb-4">
+        <% const machineList = (typeof machines !== "undefined" && machines) ? machines : []; %>
+        <% for (const machine of machineList) { %>
+        <% const meta = (machine.attributes && machine.attributes.metadata) ? machine.attributes.metadata : {}; %>
+        <table>
+            <tr><td>DOMAIN</td><td class="full mono"><%= machine.attributes.fingerprint || "—" %></td></tr>
+            <tr><td>STORE</td><td class="full mono"><%= meta.store || "—" %></td></tr>
+            <tr><td>OWNER</td><td class="full mono"><%= meta.owner || "—" %></td></tr>
+            <tr><td>EMAIL</td><td class="full mono"><%= meta.email || "—" %></td></tr>
+            <tr><td>TELEPHONE</td><td class="full mono"><%= meta.telephone || "—" %></td></tr>
+            <tr><td>ADDRESS</td><td class="full mono"><%= meta.address || "—" %></td></tr>
+            <tr><td>URL</td><td class="full mono"><%= meta.url || "—" %></td></tr>
+            <tr><td>PLATFORM</td><td class="full mono"><%= meta.platform || "—" %></td></tr>
+        </table>
+        <div class="flex justify-end px-8">
+            <a href="/machine/<%= machine.id %>/delete" class="text-red-500 text-sm font-bold" onClick="return confirm('Reset this activation so the merchant can re-activate on a new domain?')">Reset activation</a>
+        </div>
+        <% } %>
+        <% if (machineList.length === 0) { %>
+        <table><tr><td class="full">No activation yet. The merchant has not entered and saved the key on their store.</td></tr></table>
+        <% } %>
+    </div>
+
     <!-- delete -->
     <div class="flex justify-end gap-2 p-4">
         <a href="/license/<%= license.id %>/delete" class="text-red-500 font-bold p-2" onClick="return confirm('Are you sure?')">Delete</a>
