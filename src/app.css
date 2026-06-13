@@ -3,77 +3,198 @@
 @tailwind utilities;
 
 body {
-    @apply bg-gradient-to-br from-gray-900 to-gray-700 min-h-screen;
-}
-
-#container {
-    @apply text-gray-50 max-w-6xl mx-auto p-4 pt-8;
-}
-
-.table-wrap {
-    @apply overflow-x-auto rounded-b-xl;
-}
-
-.cards {
-    @apply grid gap-4 px-8 py-6 sm:grid-cols-2 lg:grid-cols-3;
-}
-
-.card {
-    @apply block no-underline rounded-xl border border-gray-200 bg-white p-5 hover:border-gray-400 hover:shadow-sm transition;
+    @apply bg-gray-100 text-gray-800 min-h-screen m-0;
 }
 
 a {
-    @apply underline;
+    @apply no-underline;
+}
+
+/* Sidebar */
+#sidebar {
+    @apply fixed top-0 left-0 z-20 flex h-screen w-60 flex-col bg-gray-900 text-gray-300;
+}
+
+#sidebar .brand {
+    @apply flex h-16 items-center gap-2 border-b border-white/10 px-5 text-lg font-semibold text-white;
+}
+
+#sidebar nav {
+    @apply flex flex-col gap-1 p-3;
+}
+
+#sidebar nav a {
+    @apply flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-300 transition hover:bg-white/10 hover:text-white;
+}
+
+#sidebar nav a.active {
+    @apply bg-white/15 text-white;
+}
+
+#sidebar .sidebar-footer {
+    @apply mt-auto break-all p-4 text-xs text-gray-500;
+}
+
+/* Main + topbar */
+#main {
+    @apply ml-60 flex min-h-screen flex-col;
+}
+
+#topbar {
+    @apply sticky top-0 z-10 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6;
+}
+
+#topbar .topbar-title {
+    @apply text-lg font-semibold text-gray-900;
+}
+
+#topbar .topbar-account {
+    @apply text-sm text-gray-500;
+}
+
+#content {
+    @apply flex-1 p-6;
+}
+
+/* Cards */
+.page-card {
+    @apply overflow-hidden rounded-xl border border-gray-200 bg-white text-gray-800 shadow-sm;
+}
+
+.page-card + .page-card {
+    @apply mt-6;
+}
+
+.card-head {
+    @apply flex items-center justify-between border-b border-gray-200 px-6 py-4;
+}
+
+.card-head h2 {
+    @apply text-base font-semibold text-gray-900;
+}
+
+/* Stat tiles */
+.stats {
+    @apply mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4;
+}
+
+.stat {
+    @apply rounded-xl border border-gray-200 bg-white p-5 shadow-sm;
+}
+
+.stat .num {
+    @apply text-3xl font-semibold text-gray-900;
+}
+
+.stat .label {
+    @apply mt-1 text-xs font-medium uppercase tracking-wide text-gray-500;
+}
+
+/* Product cards on the dashboard */
+.cards {
+    @apply grid gap-4 p-6 sm:grid-cols-2 lg:grid-cols-3;
+}
+
+.card {
+    @apply block rounded-xl border border-gray-200 bg-white p-5 transition hover:border-gray-400 hover:shadow-sm;
+}
+
+/* Buttons */
+.btn {
+    @apply inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900;
+}
+
+.btn-primary {
+    @apply border-blue-600 bg-blue-600 text-white hover:border-blue-700 hover:bg-blue-700 hover:text-white;
+}
+
+/* Tables */
+.table-wrap {
+    @apply overflow-x-auto;
 }
 
 table {
-    @apply w-full;
+    @apply w-full border-collapse;
 }
 
 table th {
-    @apply py-2 pr-2 text-xs text-left text-gray-400 font-medium uppercase tracking-wide;
-
-    &:first-child {
-        @apply pl-8;
-    }
-
-    &:last-child {
-        @apply pr-8;
-    }
+    @apply whitespace-nowrap border-b border-gray-200 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500;
 }
 
 table td {
-    @apply pr-3 py-2 align-top text-base text-gray-700 truncate;
-
-    &.full {
-        @apply w-full;
-    }
-
-    &.mono {
-        @apply font-mono;
-    }
-
-    &:first-child {
-        @apply pl-8 text-gray-600;
-    }
-
-    &:last-child {
-        @apply pr-8;
-    }
+    @apply border-b border-gray-100 px-6 py-3 align-middle text-sm text-gray-700;
 }
 
-table tr:hover td {
-    @apply bg-gray-100/50;
-}
-
-table tr td {
-    @apply border-b border-b-gray-200;
+table td.mono {
+    @apply font-mono text-xs;
 }
 
 table tr:last-child td {
     @apply border-b-0;
 }
 
-.subheader {
-    @apply px-8 pt-4 pb-2 text-xs text-left text-gray-400 font-medium uppercase tracking-wide;
+table tbody tr:hover td {
+    @apply bg-gray-50;
+}
+
+a.link {
+    @apply font-medium text-blue-600 hover:text-blue-700;
+}
+
+/* Status + key pills */
+.pill {
+    @apply inline-flex rounded-full px-2 py-0.5 text-xs font-medium;
+}
+
+.pill-green {
+    @apply bg-green-100 text-green-700;
+}
+
+.pill-gray {
+    @apply bg-gray-100 text-gray-600;
+}
+
+.pill-red {
+    @apply bg-red-100 text-red-700;
+}
+
+.muted {
+    @apply text-gray-400;
+}
+
+/* Forms */
+.form {
+    @apply flex flex-col gap-4 p-6;
+}
+
+.form label {
+    @apply block text-sm font-medium text-gray-700;
+}
+
+.form input[type="text"],
+.form input[type="email"],
+.form select,
+.form textarea {
+    @apply mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500;
+}
+
+.form .err {
+    @apply rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700;
+}
+
+.form .hint {
+    @apply text-xs text-gray-500;
+}
+
+/* Definition rows on detail pages */
+.defrow {
+    @apply flex border-b border-gray-100 px-6 py-3 text-sm last:border-b-0;
+}
+
+.defrow .k {
+    @apply w-44 shrink-0 font-medium text-gray-500;
+}
+
+.defrow .v {
+    @apply break-all text-gray-800;
 }

@@ -1,0 +1,46 @@
+<%- include("partials/header") %>
+
+<div class="page-card">
+    <div class="card-head">
+        <h2>All licenses (<%= rows.length %>)</h2>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Store</th>
+                    <th>Email</th>
+                    <th>Domain</th>
+                    <th>Product</th>
+                    <th>Key</th>
+                    <th>Status</th>
+                    <th>Expires</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (const row of rows) { %>
+                <tr>
+                    <td><a class="link" href="/license/<%= row.id %>"><%= row.merchant.store || "—" %></a></td>
+                    <td><%= row.merchant.email || "—" %></td>
+                    <td class="mono"><%= row.merchant.domain || "—" %></td>
+                    <td><%= row.product %></td>
+                    <td class="mono"><%= row.key.split("-")[0] %></td>
+                    <td><%- include("partials/status", { status: row.status }) %></td>
+                    <td>
+                        <% if (row.expiry) { %>
+                        <%= row.expiry.split("T")[0] %><% if (row.days !== null) { %> <span class="<%= row.days < 0 ? 'text-red-600' : 'muted' %>">(<%= row.days %>d)</span><% } %>
+                        <% } else { %>
+                        <span class="muted">perpetual</span>
+                        <% } %>
+                    </td>
+                </tr>
+                <% } %>
+                <% if (rows.length === 0) { %>
+                <tr><td colspan="7" class="muted">No licenses yet.</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%- include("partials/footer") %>

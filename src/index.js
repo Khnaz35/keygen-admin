@@ -9,6 +9,7 @@ const hummingbird = new Hummingbird();
 hummingbird.app.use(middleware.authorize);
 
 hummingbird.get("/", controllers.products.home);
+hummingbird.get("/licenses", controllers.licenses.index);
 hummingbird.get("/products", controllers.products.index);
 hummingbird.get("/products/create", "create_product");
 hummingbird.post("/products/create", controllers.products.handle_create);

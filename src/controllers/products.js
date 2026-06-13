@@ -1,24 +1,30 @@
 import keygen from "../keygen.js";
 import getAPIKey from "../api_key.js";
 import { getLicenseMachines, daysUntil, merchantOf } from "../machines.js";
+import { gatherLicenses, summarise } from "../data.js";
 
 export async function index(req, res) {
-    const api_key = await getAPIKey();
-    const products = await keygen.getProducts(api_key);
-    res.render('products', { products });
-}
-
-export async function home(req, res) {
     const api_key = await getAPIKey();
     const products = await keygen.getProducts(api_key);
 
     for (const product of products) {
         const licenses = await keygen.getLicenses(api_key, product.id);
         product.total = licenses.length;
-        product.active = licenses.filter(l => l.attributes.status === "ACTIVE").length;
+        product.active = licenses.filter((l) => l.attributes.status === "ACTIVE").length;
     }
 
-    res.render('index', { products });
+    res.render('products', { products, title: "Products" });
+}
+
+export async function home(req, res) {
+    const api_key = await getAPIKey();
+    const { products, rows } = await gatherLicenses(api_key);
+    const stats = summarise(rows, products);
+    const recent = [...rows]
+        .sort((a, b) => (a.created < b.created ? 1 : -1))
+        .slice(0, 8);
+
+    res.render('index', { products, stats, recent, title: "Dashboard" });
 }
 
 export async function handle_create(req, res) {
@@ -45,5 +51,5 @@ export async function show(req, res) {
         license.days = daysUntil(license.attributes.expiry);
     }
 
-    res.render('product', { product, policies, licenses });
+    res.render('product', { product, policies, licenses, title: product.attributes.name });
 }

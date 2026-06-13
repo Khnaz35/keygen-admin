@@ -1,4 +1,15 @@
-</div>
+        </main>
+    </div>
+    <script>
+        (function () {
+            var p = window.location.pathname;
+            var key = p === "/" ? "dashboard"
+                : (p.indexOf("/license") === 0 ? "licenses"
+                : (p.indexOf("/product") === 0 ? "products" : ""));
+            var el = key && document.querySelector('[data-nav="' + key + '"]');
+            if (el) { el.classList.add("active"); }
+        })();
+    </script>
 </body>
 
 </html>
