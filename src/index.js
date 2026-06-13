@@ -9,6 +9,10 @@ const hummingbird = new Hummingbird();
 hummingbird.app.use(middleware.locals);
 hummingbird.app.use(middleware.requireAuth);
 
+hummingbird.app.get("/robots.txt", (req, res) => {
+    res.type("text/plain").send("User-agent: *\nDisallow: /\n");
+});
+
 hummingbird.get("/login", controllers.auth.login);
 hummingbird.get("/auth/google", controllers.auth.start);
 hummingbird.get("/auth/google/callback", controllers.auth.callback);

@@ -1,4 +1,4 @@
-const PUBLIC_PATHS = ["/login", "/auth/google", "/auth/google/callback", "/app.css"];
+const PUBLIC_PATHS = ["/login", "/auth/google", "/auth/google/callback", "/app.css", "/robots.txt"];
 
 function isPublic(path) {
     if (path === "/webhooks/paddle") {
@@ -9,6 +9,7 @@ function isPublic(path) {
 }
 
 export function locals(req, res, next) {
+    res.set("X-Robots-Tag", "noindex, nofollow, noarchive, nosnippet");
     res.locals.brandName = process.env.BRAND_NAME || "License Admin";
     res.locals.brandLogo = process.env.BRAND_LOGO_URL || "";
     res.locals.sessionEmail = (req.session && req.session.email) || "";
