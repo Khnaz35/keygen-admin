@@ -7,7 +7,19 @@ body {
 }
 
 #container {
-    @apply text-gray-50 max-w-3xl mx-auto p-4 pt-8;
+    @apply text-gray-50 max-w-6xl mx-auto p-4 pt-8;
+}
+
+.table-wrap {
+    @apply overflow-x-auto rounded-b-xl;
+}
+
+.cards {
+    @apply grid gap-4 px-8 py-6 sm:grid-cols-2 lg:grid-cols-3;
+}
+
+.card {
+    @apply block no-underline rounded-xl border border-gray-200 bg-white p-5 hover:border-gray-400 hover:shadow-sm transition;
 }
 
 a {
@@ -31,7 +43,7 @@ table th {
 }
 
 table td {
-    @apply pr-3 py-2 align-top text-base text-gray-400 truncate;
+    @apply pr-3 py-2 align-top text-base text-gray-700 truncate;
 
     &.full {
         @apply w-full;

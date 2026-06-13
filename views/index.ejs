@@ -13,13 +13,29 @@
     </h1>
 
 
-    <div class="flex flex-col gap-4 bg-gray-50 border-t py-1 border-t-gray-200 rounded-b-xl">
-        <div class="px-8 py-4 prose prose-xl">
-            <ul>
-                <li>
-                    <a href="/products">Products</a>
-                </li>
-            </ul>
+    <div class="flex flex-col bg-gray-50 border-t border-t-gray-200 rounded-b-xl">
+        <div class="cards">
+            <% for (const product of products) { %>
+            <a class="card" href="/product/<%= product.id %>">
+                <div class="text-lg font-medium text-gray-800"><%= product.attributes.name %></div>
+                <div class="mt-3 flex gap-6">
+                    <div>
+                        <div class="text-2xl font-semibold text-gray-900"><%= product.total %></div>
+                        <div class="text-xs uppercase tracking-wide text-gray-500">Licenses</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-semibold text-green-600"><%= product.active %></div>
+                        <div class="text-xs uppercase tracking-wide text-gray-500">Active</div>
+                    </div>
+                </div>
+            </a>
+            <% } %>
+            <% if (products.length === 0) { %>
+            <div class="text-gray-500">No products yet. <a href="/products/create">Add one</a>.</div>
+            <% } %>
+        </div>
+        <div class="px-8 pb-6 -mt-2">
+            <a href="/products" class="text-sm text-gray-600">Manage all products</a>
         </div>
     </div>
 </div>

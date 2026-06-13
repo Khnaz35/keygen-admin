@@ -8,7 +8,7 @@ import * as middleware from "./middleware.js";
 const hummingbird = new Hummingbird();
 hummingbird.app.use(middleware.authorize);
 
-hummingbird.get("/", "index");
+hummingbird.get("/", controllers.products.home);
 hummingbird.get("/products", controllers.products.index);
 hummingbird.get("/products/create", "create_product");
 hummingbird.post("/products/create", controllers.products.handle_create);

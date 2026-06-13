@@ -8,6 +8,19 @@ export async function index(req, res) {
     res.render('products', { products });
 }
 
+export async function home(req, res) {
+    const api_key = await getAPIKey();
+    const products = await keygen.getProducts(api_key);
+
+    for (const product of products) {
+        const licenses = await keygen.getLicenses(api_key, product.id);
+        product.total = licenses.length;
+        product.active = licenses.filter(l => l.attributes.status === "ACTIVE").length;
+    }
+
+    res.render('index', { products });
+}
+
 export async function handle_create(req, res) {
     const { name } = req.body;
     if (!name || name.trim().length === 0) {
